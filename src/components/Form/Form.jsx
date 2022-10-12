@@ -62,43 +62,32 @@ const Form = () => {
         }
     }, []);
 
-    // const handleSubmit = useCallback(
-    //     () => {
-    //         setStatus(prevStatus => ({ ...prevStatus, submitting: true }));
-    //         axios({
-    //             method: 'POST',
-    //             url: process.env.REACT_APP_CONTACT_FORM_ENDPOINT,
-    //             data: inputs
-    //         }).then(_response => {
-    //             handleServerResponse(
-    //                 true,
-    //                 "Спасибо! Ваш заказ был успешно создан, скоро мы свяжемся с вами."
-    //             )
-    //         })
-    //     },
-    //     [inputs, handleServerResponse]
-    // );
+    const handleSubmit = useCallback(
+        () => {
+            setStatus(prevStatus => ({ ...prevStatus, submitting: true }));
+            axios({
+                method: 'POST',
+                url: process.env.REACT_APP_CONTACT_FORM_ENDPOINT,
+                data: inputs
+            }).then(_response => {
+                handleServerResponse(
+                    true,
+                    "Спасибо! Ваш заказ был успешно создан, скоро мы свяжемся с вами."
+                )
+            })
+        },
+        [inputs, handleServerResponse]
+    );
 
     const {tg} = useTelegram();
 
     const onSendData = useCallback(() => {
-        setStatus(prevStatus => ({ ...prevStatus, submitting: true }));
-        axios({
-            method: 'POST',
-            url: process.env.REACT_APP_CONTACT_FORM_ENDPOINT,
-            data: inputs
-        }).then(_response => {
-            handleServerResponse(
-                true,
-                "Спасибо! Ваш заказ был успешно создан, скоро мы свяжемся с вами."
-            )
-        })
         const data = {
             inputs
         }
         tg.sendData(JSON.stringify(data));
 
-    }, [inputs, tg, handleServerResponse]);
+    }, [inputs, tg]);
 
     useEffect(() => {
         tg.onEvent("mainButtonClicked", onSendData);
@@ -171,6 +160,18 @@ const Form = () => {
                                 value={inputs.item}
                                 onChange={handleOnChange}
                             />
+                            <div style={{textAlign: "center", marginTop: "2.5rem"}}>
+                                <button
+                                    type="submit"
+                                    className="form-button"
+                                >
+                                    {!status.submitting
+                                        ? !status.submitted
+                                            ? "Submit"
+                                            : "Submitted"
+                                        : "Submitting..."}
+                                </button>
+                            </div>
                         </>
                     )}
                 </form>

@@ -1,7 +1,9 @@
 .product {
     display: flex;
     flex-direction: column;
-    border: 1px solid var(--tg-theme-button-color);
+    border-radius: 1.5rem;
+    border-width: 2px;
+    border-color: rgb(255 255 255);
     padding: 15px;
     width: 170px;
     justify-items: center;

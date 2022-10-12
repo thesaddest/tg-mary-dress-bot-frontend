@@ -65,3 +65,10 @@
     padding: 10px;
     margin-top: 15px;
 }
+
+.form-button {
+    background: white;
+    color: black;
+    border-radius: 1.5rem;
+    padding: 0.5rem 2rem;
+}
