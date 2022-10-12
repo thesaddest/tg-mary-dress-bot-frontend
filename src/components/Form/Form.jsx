@@ -63,8 +63,8 @@ const Form = () => {
     }, []);
 
     const handleSubmit = useCallback(
-        (e) => {
-            e.preventDefault();
+        () => {
+            // e.preventDefault();
             setStatus(prevStatus => ({ ...prevStatus, submitting: true }));
             axios({
                 method: 'POST',
@@ -86,12 +86,12 @@ const Form = () => {
         const data = {
             inputs
         }
-
         tg.sendData(JSON.stringify(data));
+        handleSubmit();
     }, [inputs, tg]);
 
     useEffect(() => {
-        tg.onEvent("mainButtonClicked", onSendData).then(handleSubmit);
+        tg.onEvent("mainButtonClicked", onSendData);
         return () => {
             tg.offEvent("mainButtonClicked", onSendData);
         }
@@ -110,10 +110,6 @@ const Form = () => {
             tg.MainButton.show();
         }
     }, [inputs, tg.MainButton]);
-
-    useEffect(() => {
-        console.log(status)
-    }, [status])
 
     return (
         <div className={"form-wrapper"}>
