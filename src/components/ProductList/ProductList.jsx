@@ -25,7 +25,7 @@ const ProductList = () => {
             totalPrice: `${getTotalPrice(addedItems)} zl`,
             queryId,
         }
-        fetch("https://63468b96b243b55459d21cc4--cool-dolphin-8e1dca.netlify.app/web-data", {
+        fetch("http://localhost:8000/web-data", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -66,7 +66,7 @@ const ProductList = () => {
     return (
         <div className={"list"}>
             {products.map((product) => (
-                <ProductItem product={product} onAdd={onAdd} className={"item"} />
+                <ProductItem key={product.id} product={product} onAdd={onAdd} className={"item"} />
             ))}
         </div>
     );
