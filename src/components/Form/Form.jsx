@@ -84,7 +84,7 @@ const Form = () => {
                 <input
                     className={"input"}
                     type="text"
-                    placeholder={"Instagram (опционально)"}
+                    placeholder={"Никнейм Instagram (опционально)"}
                     value={instagram}
                     onChange={onChangeInstargam}
                 />
