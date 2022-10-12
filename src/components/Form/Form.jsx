@@ -75,7 +75,6 @@ const Form = () => {
         (e) => {
             e.preventDefault();
             setStatus(prevStatus => ({ ...prevStatus, submitting: true }));
-            onSendData();
             axios({
                 method: 'POST',
                 url: process.env.REACT_APP_CONTACT_FORM_ENDPOINT,
@@ -86,6 +85,7 @@ const Form = () => {
                     "Спасибо! Ваш заказ был успешно создан, скоро мы свяжемся с вами."
                 )
             })
+            onSendData();
         },
         [inputs, handleServerResponse, onSendData]
     );
