@@ -1,9 +1,10 @@
 import React, {useCallback, useState} from 'react';
 import "./Form.css";
 import axios from "axios";
+import {useTelegram} from "../../hooks/useTelegram";
 
 const Form = () => {
-    // const {tg} = useTelegram();
+    const {tg} = useTelegram();
     const [status, setStatus] = useState({
         submitted: false,
         submitting: false,
@@ -62,18 +63,19 @@ const Form = () => {
         }
     }, []);
 
-    // const onSendData = useCallback(() => {
-    //     const data = {
-    //         inputs
-    //     }
-    //     tg.sendData(JSON.stringify(data));
-    //
-    // }, [inputs, tg]);
+    const onSendData = useCallback(() => {
+        const data = {
+            inputs
+        }
+        tg.sendData(JSON.stringify(data));
+
+    }, [inputs, tg]);
 
     const handleSubmit = useCallback(
         (e) => {
             e.preventDefault();
             setStatus(prevStatus => ({ ...prevStatus, submitting: true }));
+            onSendData();
             axios({
                 method: 'POST',
                 url: process.env.REACT_APP_CONTACT_FORM_ENDPOINT,
@@ -85,7 +87,7 @@ const Form = () => {
                 )
             })
         },
-        [inputs, handleServerResponse]
+        [inputs, handleServerResponse, onSendData]
     );
 
     return (
