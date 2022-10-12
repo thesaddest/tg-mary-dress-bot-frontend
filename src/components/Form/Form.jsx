@@ -1,6 +1,7 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import "./Form.css";
 import axios from "axios";
+import {useTelegram} from "../../hooks/useTelegram";
 
 const Form = () => {
     // const [name, setName] = useState("");
@@ -67,8 +68,8 @@ const Form = () => {
 
     const [inputs, setInputs] = useState({
         customerName: "",
-        email: "",
-        message: "",
+        telephone: "",
+        item: "",
     });
 
     const handleOnChange = useCallback((e) => {
@@ -99,8 +100,8 @@ const Form = () => {
             });
             setInputs({
                 customerName: "",
-                email: "",
-                message: "",
+                telephone: "",
+                item: "",
             });
         } else {
             setStatus({
@@ -120,17 +121,48 @@ const Form = () => {
             setStatus(prevStatus => ({ ...prevStatus, submitting: true }));
             axios({
                 method: 'POST',
-                url: process.env.CONTACT_FORM_ENDPOINT,
+                url: process.env.REACT_APP_CONTACT_FORM_ENDPOINT,
                 data: inputs
             }).then(_response => {
                 handleServerResponse(
                     true,
-                    "Thank you, your message has been submmitted."
+                    "Спасибо! Ваш заказ был успешно создан, скоро мы свяжемся с вами."
                 )
             })
         },
         [inputs, handleServerResponse]
     );
+
+    const {tg} = useTelegram();
+
+    const onSendData = useCallback(() => {
+        const data = {
+            inputs
+        }
+
+        tg.sendData(JSON.stringify(data));
+    }, [inputs, tg]);
+
+    useEffect(() => {
+        tg.onEvent("mainButtonClicked", onSendData, handleSubmit);
+        return () => {
+            tg.offEvent("mainButtonClicked", onSendData, handleSubmit);
+        }
+    },[tg, onSendData, handleSubmit]);
+
+    useEffect(() => {
+        tg.MainButton.setParams({
+            text: "Отправить данные"
+        });
+    },[tg.MainButton]);
+
+    useEffect(() => {
+        if(!inputs) {
+            tg.MainButton.hide();
+        } else {
+            tg.MainButton.show();
+        }
+    }, [inputs, tg.MainButton]);
 
     return (
         <div className={"form-wrapper"}>
@@ -158,6 +190,28 @@ const Form = () => {
                                 type="text"
                                 placeholder={"Имя"}
                                 value={inputs.customerName}
+                                onChange={handleOnChange}
+                            />
+                            <input
+                                id={"telephone"}
+                                name={"telephone"}
+                                maxLength={12}
+                                required
+                                className={"input"}
+                                type="text"
+                                placeholder={"Телефон"}
+                                value={inputs.telephone}
+                                onChange={handleOnChange}
+                            />
+                            <input
+                                id={"item"}
+                                name={"item"}
+                                maxLength={128}
+                                required
+                                className={"input"}
+                                type="text"
+                                placeholder={"Название вещи"}
+                                value={inputs.item}
                                 onChange={handleOnChange}
                             />
                         </>
