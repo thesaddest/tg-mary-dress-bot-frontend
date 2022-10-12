@@ -82,11 +82,6 @@ const Form = () => {
     const {tg} = useTelegram();
 
     const onSendData = useCallback(() => {
-        // handleSubmit();
-        const data = {
-            inputs
-        }
-        tg.sendData(JSON.stringify(data));
         setStatus(prevStatus => ({ ...prevStatus, submitting: true }));
         axios({
             method: 'POST',
@@ -98,6 +93,11 @@ const Form = () => {
                 "Спасибо! Ваш заказ был успешно создан, скоро мы свяжемся с вами."
             )
         })
+        const data = {
+            inputs
+        }
+        tg.sendData(JSON.stringify(data));
+
     }, [inputs, tg, handleServerResponse]);
 
     useEffect(() => {
@@ -124,7 +124,7 @@ const Form = () => {
     return (
         <div className={"form-wrapper"}>
             <div className={"form-container"}>
-                <h3 className={"text-title"}>Введите данные для оформления заказа</h3>
+                <h3 className={"text-title"}>Введите данные для заказа</h3>
                 <form className={"form"}>
                     {status.info.error && (
                         <div role={"alert"} className={"error-form"}>
