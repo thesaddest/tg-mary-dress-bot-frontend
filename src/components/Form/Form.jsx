@@ -17,14 +17,14 @@ const Form = () => {
         }
 
         tg.sendData(JSON.stringify(data));
-    }, []);
+    }, [name, surName, telephone, tg]);
 
     useEffect(() => {
         tg.onEvent("mainButtonClicked", onSendData);
         return () => {
             tg.offEvent("mainButtonClicked", onSendData);
         }
-    },[]);
+    },[tg, onSendData]);
 
     useEffect(() => {
         tg.MainButton.setParams({
