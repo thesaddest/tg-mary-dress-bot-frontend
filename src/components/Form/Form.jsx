@@ -114,7 +114,7 @@ const Form = () => {
         <div className={"form-wrapper"}>
             <div className={"form-container"}>
                 <h3 className={"text-title"}>Введите данные для заказа</h3>
-                <form className={"form"}>
+                <form className={"form"} onSubmit={handleSubmit}>
                     {status.info.error && (
                         <div role={"alert"} className={"error-form"}>
                             <strong>Ошибка</strong>
