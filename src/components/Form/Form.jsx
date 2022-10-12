@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import "./Form.css";
 import {useTelegram} from "../../hooks/useTelegram";
 
@@ -9,10 +9,27 @@ const Form = () => {
     const [instagram, setInstagram] = useState("");
     const {tg} = useTelegram();
 
+    const onSendData = useCallback(() => {
+        const data = {
+            name,
+            surName,
+            telephone,
+        }
+
+        tg.sendData(JSON.stringify(data));
+    }, []);
+
+    useEffect(() => {
+        tg.onEvent("mainButtonClicked", onSendData);
+        return () => {
+            tg.offEvent("mainButtonClicked", onSendData);
+        }
+    },[]);
+
     useEffect(() => {
         tg.MainButton.setParams({
             text: "Отправить данные"
-        })
+        });
     },[tg.MainButton]);
 
     useEffect(() => {
@@ -21,7 +38,7 @@ const Form = () => {
         } else {
             tg.MainButton.show();
         }
-    }, [name, surName, telephone, tg.MainButton])
+    }, [name, surName, telephone, tg.MainButton]);
 
     const onChangeName = (e) => {
         setName(e.target.value);
@@ -67,7 +84,7 @@ const Form = () => {
                 <input
                     className={"input"}
                     type="text"
-                    placeholder={"Instagram"}
+                    placeholder={"Instagram (опционально)"}
                     value={instagram}
                     onChange={onChangeInstargam}
                 />
