@@ -62,32 +62,43 @@ const Form = () => {
         }
     }, []);
 
-    const handleSubmit = useCallback(
-        () => {
-            setStatus(prevStatus => ({ ...prevStatus, submitting: true }));
-            axios({
-                method: 'POST',
-                url: process.env.REACT_APP_CONTACT_FORM_ENDPOINT,
-                data: inputs
-            }).then(_response => {
-                handleServerResponse(
-                    true,
-                    "Спасибо! Ваш заказ был успешно создан, скоро мы свяжемся с вами."
-                )
-            })
-        },
-        [inputs, handleServerResponse]
-    );
+    // const handleSubmit = useCallback(
+    //     () => {
+    //         setStatus(prevStatus => ({ ...prevStatus, submitting: true }));
+    //         axios({
+    //             method: 'POST',
+    //             url: process.env.REACT_APP_CONTACT_FORM_ENDPOINT,
+    //             data: inputs
+    //         }).then(_response => {
+    //             handleServerResponse(
+    //                 true,
+    //                 "Спасибо! Ваш заказ был успешно создан, скоро мы свяжемся с вами."
+    //             )
+    //         })
+    //     },
+    //     [inputs, handleServerResponse]
+    // );
 
     const {tg} = useTelegram();
 
     const onSendData = useCallback(() => {
-        handleSubmit();
+        // handleSubmit();
         const data = {
             inputs
         }
         tg.sendData(JSON.stringify(data));
-    }, [inputs, tg, handleSubmit]);
+        setStatus(prevStatus => ({ ...prevStatus, submitting: true }));
+        axios({
+            method: 'POST',
+            url: process.env.REACT_APP_CONTACT_FORM_ENDPOINT,
+            data: inputs
+        }).then(_response => {
+            handleServerResponse(
+                true,
+                "Спасибо! Ваш заказ был успешно создан, скоро мы свяжемся с вами."
+            )
+        })
+    }, [inputs, tg, handleServerResponse]);
 
     useEffect(() => {
         tg.onEvent("mainButtonClicked", onSendData);
@@ -113,7 +124,7 @@ const Form = () => {
     return (
         <div className={"form-wrapper"}>
             <div className={"form-container"}>
-                <h3 className={"text-title"}>Введите ваши данные</h3>
+                <h3 className={"text-title"}>Введите данные для оформления заказа</h3>
                 <form className={"form"}>
                     {status.info.error && (
                         <div role={"alert"} className={"error-form"}>
