@@ -103,7 +103,7 @@ const Form = () => {
     },[tg.MainButton]);
 
     useEffect(() => {
-        if(!inputs) {
+        if(inputs.item === "" || inputs.customerName === "" || inputs.telephone === "") {
             tg.MainButton.hide();
         } else {
             tg.MainButton.show();
