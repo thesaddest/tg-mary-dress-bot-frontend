@@ -1,9 +1,10 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import "./Form.css";
 import axios from "axios";
 import {useTelegram} from "../../hooks/useTelegram";
 
 const Form = () => {
+    const {tg} = useTelegram();
     const [status, setStatus] = useState({
         submitted: false,
         submitting: false,
@@ -63,52 +64,52 @@ const Form = () => {
     }, []);
 
     const handleSubmit = useCallback(
-        () => {
+        (e) => {
+            e.preventDefault();
             setStatus(prevStatus => ({ ...prevStatus, submitting: true }));
             axios({
                 method: 'POST',
                 url: process.env.REACT_APP_CONTACT_FORM_ENDPOINT,
                 data: inputs
             }).then(_response => {
+                tg.sendData(JSON.stringify(_response.data))
                 handleServerResponse(
                     true,
                     "Спасибо! Ваш заказ был успешно создан, скоро мы свяжемся с вами."
                 )
             })
         },
-        [inputs, handleServerResponse]
+        [inputs, handleServerResponse, tg]
     );
 
-    const {tg} = useTelegram();
+    // const onSendData = useCallback(() => {
+    //     const data = {
+    //         inputs
+    //     }
+    //     tg.sendData(JSON.stringify(data));
+    //
+    // }, [inputs, tg]);
 
-    const onSendData = useCallback(() => {
-        const data = {
-            inputs
-        }
-        tg.sendData(JSON.stringify(data));
-
-    }, [inputs, tg]);
-
-    useEffect(() => {
-        tg.onEvent("mainButtonClicked", onSendData);
-        return () => {
-            tg.offEvent("mainButtonClicked", onSendData);
-        }
-    },[tg, onSendData]);
-
-    useEffect(() => {
-        tg.MainButton.setParams({
-            text: "Отправить данные"
-        });
-    },[tg.MainButton]);
-
-    useEffect(() => {
-        if(inputs.item === "" || inputs.customerName === "" || inputs.telephone === "") {
-            tg.MainButton.hide();
-        } else {
-            tg.MainButton.show();
-        }
-    }, [inputs, tg.MainButton]);
+    // useEffect(() => {
+    //     tg.onEvent("mainButtonClicked", onSendData);
+    //     return () => {
+    //         tg.offEvent("mainButtonClicked", onSendData);
+    //     }
+    // },[tg, onSendData]);
+    //
+    // useEffect(() => {
+    //     tg.MainButton.setParams({
+    //         text: "Отправить данные"
+    //     });
+    // },[tg.MainButton]);
+    //
+    // useEffect(() => {
+    //     if(inputs.item === "" || inputs.customerName === "" || inputs.telephone === "") {
+    //         tg.MainButton.hide();
+    //     } else {
+    //         tg.MainButton.show();
+    //     }
+    // }, [inputs, tg.MainButton]);
 
     return (
         <div className={"form-wrapper"}>
