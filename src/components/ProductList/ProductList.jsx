@@ -25,7 +25,7 @@ const ProductList = () => {
             totalPrice: `${getTotalPrice(addedItems)} zl`,
             queryId,
         }
-        fetch("http://localhost:8000", {
+        fetch("https://63468b96b243b55459d21cc4--cool-dolphin-8e1dca.netlify.app/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
