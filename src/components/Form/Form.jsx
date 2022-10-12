@@ -63,6 +63,14 @@ const Form = () => {
         }
     }, []);
 
+    const onSendData = useCallback(() => {
+        const data = {
+            inputs
+        }
+        tg.sendData(JSON.stringify(data));
+
+    }, [inputs, tg]);
+
     const handleSubmit = useCallback(
         (e) => {
             e.preventDefault();
@@ -72,23 +80,17 @@ const Form = () => {
                 url: process.env.REACT_APP_CONTACT_FORM_ENDPOINT,
                 data: inputs
             }).then(_response => {
-                tg.sendData(JSON.stringify(_response.data))
                 handleServerResponse(
                     true,
                     "Спасибо! Ваш заказ был успешно создан, скоро мы свяжемся с вами."
                 )
+                onSendData();
             })
         },
-        [inputs, handleServerResponse, tg]
+        [inputs, handleServerResponse, onSendData]
     );
 
-    // const onSendData = useCallback(() => {
-    //     const data = {
-    //         inputs
-    //     }
-    //     tg.sendData(JSON.stringify(data));
-    //
-    // }, [inputs, tg]);
+
 
     // useEffect(() => {
     //     tg.onEvent("mainButtonClicked", onSendData);
