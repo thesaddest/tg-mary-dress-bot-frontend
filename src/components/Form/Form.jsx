@@ -1,6 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import "./Form.css";
 import {useTelegram} from "../../hooks/useTelegram";
+import axios from "axios";
 
 const Form = () => {
     const [name, setName] = useState("");
@@ -56,38 +57,134 @@ const Form = () => {
         setInstagram(e.target.value);
     }
 
+    const [status, setStatus] = useState({
+        submitted: false,
+        submitting: false,
+        info: {
+            error: false,
+            msg: null,
+        },
+    });
+
+    const [inputs, setInputs] = useState({
+        customerName: "",
+        email: "",
+        message: "",
+    });
+
+    const handleOnChange = useCallback((e) => {
+        e.persist();
+        setInputs((prev) => ({
+            ...prev,
+            [e.target.id]: e.target.value,
+        }));
+        setStatus({
+            submitted: false,
+            submitting: false,
+            info: {
+                error: false,
+                msg: null,
+            },
+        });
+    }, []);
+
+    const handleServerResponse = useCallback((ok, msg) => {
+        if (ok) {
+            setStatus({
+                submitted: true,
+                submitting: false,
+                info: {
+                    error: false,
+                    msg,
+                },
+            });
+            setInputs({
+                custmerName: "",
+                email: "",
+                message: "",
+            });
+        } else {
+            setStatus({
+                submitted: false,
+                submitting: false,
+                info: {
+                    error: true,
+                    msg,
+                },
+            });
+        }
+    }, []);
+
+    const handleSubmit = useCallback(
+        (e) => {
+            e.preventDefault();
+            setStatus(prevStatus => ({ ...prevStatus, submitting: true }));
+            axios({
+                method: 'POST',
+                url: process.env.CONTACT_FORM_ENDPOINT,
+                data: inputs
+            }).then(_response => {
+                handleServerResponse(
+                    true,
+                    "Thank you, your message has been submmitted."
+                )
+            })
+        },
+        [inputs, handleServerResponse]
+    );
+
     return (
         <div className={"form-wrapper"}>
-            <h3>Введите ваши данные</h3>
-            <div className={"form-wrapper"}>
-                <input
-                    className={"input"}
-                    type="text"
-                    placeholder={"Имя"}
-                    value={name}
-                    onChange={onChangeName}
-                />
-                <input
-                    className={"input"}
-                    type="text"
-                    placeholder={"Фамилия"}
-                    value={surName}
-                    onChange={onChangeSurName}
-                />
-                <input
-                    className={"input"}
-                    type="text"
-                    placeholder={"Телефон (требуется для подтверждения заказа)"}
-                    value={telephone}
-                    onChange={onChangeTelephone}
-                />
-                <input
-                    className={"input"}
-                    type="text"
-                    placeholder={"Никнейм Instagram (опционально)"}
-                    value={instagram}
-                    onChange={onChangeInstargam}
-                />
+            <div className={"form-container"}>
+                <h3 className={"text-title"}>Введите ваши данные</h3>
+                <form className={"form"} onSubmit={handleSubmit}>
+                    {status.info.error && (
+                        <div role={"alert"} className={"error-form"}>
+                            <strong>Ошибка</strong>
+                            <span style={{display: "block",}}>{status.info.msg}</span>
+                        </div>
+                    )}
+                    {status.submitted ? (
+                        <div className={"submitted"} role={"alert"}>
+                            Ваш заказ был успешно создан, скоро мы свяжемся с вами!
+                        </div>
+                    ) : (
+                        <>
+                            <input
+                                id={"customerName"}
+                                name={"customerName"}
+                                maxLength={128}
+                                required
+                                className={"input"}
+                                type="text"
+                                placeholder={"Имя"}
+                                value={inputs.customerName}
+                                onChange={handleOnChange}
+                            />
+                        </>
+                    )}
+                    <input
+                        className={"input"}
+                        type="text"
+                        placeholder={"Фамилия"}
+                        value={surName}
+                        onChange={onChangeSurName}
+                    />
+                    <input
+                        className={"input"}
+                        type="text"
+                        placeholder={"Телефон (требуется для подтверждения заказа)"}
+                        value={telephone}
+                        onChange={onChangeTelephone}
+                    />
+                    <input
+                        className={"input"}
+                        type="text"
+                        placeholder={"Никнейм Instagram (опционально)"}
+                        value={instagram}
+                        onChange={onChangeInstargam}
+                    />
+                </form>
             </div>
         </div>
     );

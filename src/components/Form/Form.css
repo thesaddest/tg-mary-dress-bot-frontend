@@ -1,21 +1,69 @@
 .form-wrapper {
+    background: var(--tg-theme-bg-color);
+    color: var(--tg-theme-text-color);
     display: flex;
     flex-direction: column;
-    width: 100%;
-    padding: 20px;
+    justify-content: center;
+    align-items: center;
+    padding-top: 2.5rem;
+    min-height: 100vh;
+}
+
+.form-container {
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 2.5rem;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 4rem;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+    min-width: 100%;
+}
+
+.error-form {
+    background: darkred;
+    border: 1px solid red;
+    color: indianred;
+    padding: 0.75rem 1rem;
+    position: relative;
+    border-radius: 0.25rem;
+}
+
+.submitted {
+    color: var(--tg-theme-text-color);
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    font-weight: bold;
+    padding: 0.75rem 1rem;
+    position: relative;
+    border-radius: 0.25rem;
+}
+
+.text-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .input {
-    width: 100%;
-    padding: 10px;
-    margin-top: 15px;
+    background: black;
+    color: white;
+    outline: none;
+    border-radius: 1.5rem;
+    border-width: 2px;
+    border-color: rgb(255 255 255);
+    padding: 0.5rem 2rem;
 }
 
 .select {
     padding: 10px;
     margin-top: 15px;
-}
-
-.form {
-    display: flex;
 }
