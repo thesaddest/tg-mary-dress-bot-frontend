@@ -64,7 +64,6 @@ const Form = () => {
 
     const handleSubmit = useCallback(
         () => {
-            // e.preventDefault();
             setStatus(prevStatus => ({ ...prevStatus, submitting: true }));
             axios({
                 method: 'POST',
@@ -83,11 +82,11 @@ const Form = () => {
     const {tg} = useTelegram();
 
     const onSendData = useCallback(() => {
+        handleSubmit();
         const data = {
             inputs
         }
         tg.sendData(JSON.stringify(data));
-        handleSubmit();
     }, [inputs, tg, handleSubmit]);
 
     useEffect(() => {
@@ -95,7 +94,7 @@ const Form = () => {
         return () => {
             tg.offEvent("mainButtonClicked", onSendData);
         }
-    },[tg, onSendData, handleSubmit]);
+    },[tg, onSendData]);
 
     useEffect(() => {
         tg.MainButton.setParams({
