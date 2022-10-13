@@ -80,7 +80,7 @@ const Form = ({addedItems}) => {
             axios({
                 method: 'POST',
                 url: process.env.REACT_APP_CONTACT_FORM_ENDPOINT,
-                data: inputs
+                data: inputs + ` ${getTotalPrice(addedItems)}zl`
             }).then(_response => {
                 handleServerResponse(
                     true,
