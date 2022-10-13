@@ -94,7 +94,7 @@ const Form = ({addedItems}) => {
     useEffect(() => {
         setInputs((prev) => ({
             ...prev,
-            item: addedItems.map((addedItem) => addedItem.title),
+            item: addedItems.map((addedItem) => addedItem.title + ` (${addedItem.price} zl)`),
         }));
     }, [addedItems]);
 
@@ -138,14 +138,14 @@ const Form = ({addedItems}) => {
                                 onChange={handleOnChange}
                             />
                             <textarea
+                                disabled
                                 id={"item"}
                                 name={"item"}
                                 maxLength={128}
                                 required
                                 className={"form-textarea"}
-                                placeholder={"Название вещи"}
+                                placeholder={"Выберите вещи из католога сверху"}
                                 value={inputs.item}
-                                onChange={handleOnChange}
                             />
 
                             <div style={{textAlign: "center", marginTop: "1rem"}}>
