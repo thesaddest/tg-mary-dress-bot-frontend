@@ -1,9 +1,9 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import "./Form.css";
 import axios from "axios";
 import {useTelegram} from "../../hooks/useTelegram";
 
-const Form = () => {
+const Form = ({addedItems}) => {
     const {tg} = useTelegram();
     const [status, setStatus] = useState({
         submitted: false,
@@ -89,6 +89,13 @@ const Form = () => {
         [inputs, handleServerResponse, onSendData]
     );
 
+    useEffect(() => {
+        setInputs((prev) => ({
+            ...prev,
+            item: addedItems.map((addedItem) => addedItem.title),
+        }));
+    }, [addedItems])
+
     return (
         <div className={"form-wrapper"}>
             <div className={"form-container"}>
@@ -128,13 +135,12 @@ const Form = () => {
                                 value={inputs.telephone}
                                 onChange={handleOnChange}
                             />
-                            <input
+                            <textarea
                                 id={"item"}
                                 name={"item"}
                                 maxLength={128}
                                 required
-                                className={"input"}
-                                type="text"
+                                className={"form-textarea"}
                                 placeholder={"Название вещи"}
                                 value={inputs.item}
                                 onChange={handleOnChange}
