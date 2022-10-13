@@ -84,7 +84,7 @@ const Form = () => {
                     true,
                     "Спасибо! Ваш заказ был успешно создан, скоро мы свяжемся с вами."
                 )
-            }).then(() => onSendData())
+            }).then(() => setTimeout(() => {onSendData()}, 1000))
         },
         [inputs, handleServerResponse, onSendData]
     );
