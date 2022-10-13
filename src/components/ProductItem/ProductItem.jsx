@@ -19,10 +19,10 @@ const ProductItem = ({product, className, onAdd}) => {
                 <h3 className={"title"}>{product.title}</h3>
                 <div className={"description"}>{product.description}</div>
                 <div className={"price"}>
-                    <span>Стоимость: <b>{product.price} zl</b></span>
+                    <span>Price: <b>{product.price} zl</b></span>
                 </div>
             </div>
-            <Button className={"add-btn"} onClick={onAddHandler}>{isAdded ? "Убрать из заказа": "Добавить в заказ"}</Button>
+            <Button className={"add-btn"} onClick={onAddHandler}>{isAdded ? "Remove from order": "Add to order"}</Button>
         </div>
     );
 };

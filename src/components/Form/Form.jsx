@@ -101,17 +101,17 @@ const Form = ({addedItems}) => {
     return (
         <div className={"form-wrapper"}>
             <div className={"form-container"}>
-                {status.submitted ? "" : <h3 className={"text-title"}>Введите данные для заказа</h3>}
+                {status.submitted ? "" : <h3 className={"text-title"}>Enter your data for an order</h3>}
                 <form className={"form"} onSubmit={handleSubmit}>
                     {status.info.error && (
                         <div role={"alert"} className={"error-form"}>
-                            <strong>Ошибка</strong>
+                            <strong>Error</strong>
                             <span style={{display: "block",}}>{status.info.msg}</span>
                         </div>
                     )}
                     {status.submitted ? (
                         <div className={"submitted"} role={"alert"}>
-                            Ваш заказ был успешно создан, скоро мы свяжемся с вами!
+                            Your order was successfully created, we will contact you soon!
                         </div>
                     ) : (
                         <>
@@ -122,7 +122,7 @@ const Form = ({addedItems}) => {
                                 required
                                 className={"input"}
                                 type="text"
-                                placeholder={"Имя"}
+                                placeholder={"Name"}
                                 value={inputs.customerName}
                                 onChange={handleOnChange}
                             />
@@ -133,7 +133,7 @@ const Form = ({addedItems}) => {
                                 required
                                 className={"input"}
                                 type="text"
-                                placeholder={"Телефон"}
+                                placeholder={"Telephone"}
                                 value={inputs.telephone}
                                 onChange={handleOnChange}
                             />
@@ -144,7 +144,7 @@ const Form = ({addedItems}) => {
                                 maxLength={128}
                                 required
                                 className={"form-textarea"}
-                                placeholder={"Выберите вещи из католога сверху"}
+                                placeholder={"Choose an item from catalog"}
                                 value={inputs.item}
                             />
 
