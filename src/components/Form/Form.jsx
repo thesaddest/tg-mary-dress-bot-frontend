@@ -132,7 +132,7 @@ const Form = ({addedItems}) => {
                                 maxLength={12}
                                 required
                                 className={"input"}
-                                type="text"
+                                type="number"
                                 placeholder={"Телефон"}
                                 value={inputs.telephone}
                                 onChange={handleOnChange}
