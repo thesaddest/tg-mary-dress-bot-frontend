@@ -8,10 +8,10 @@ import img3 from "../../assets/3.PNG";
 import img4 from "../../assets/4.PNG";
 
 const products = [
-    {id: 1, title: "Cardigan", price: 60, description: "Бежевый", img: img1},
-    {id: 2, title: "Cropped sweater ZARA", price: 60, description: "Черный", img: img2},
-    {id: 3, title: "Sweater Pull&Bear", price: 60, description: "Тёмно-серый, тёплый", img: img3},
-    {id: 4, title: "Gray sweater", price: 60, description: "Тёплый", img: img4}
+    {id: 1, title: "Cardigan", price: 60, description: "Бежевый, размер XS", img: img1},
+    {id: 2, title: "Cropped sweater ZARA", price: 60, description: "Черный, размер XS", img: img2},
+    {id: 3, title: "Sweater Pull&Bear", price: 60, description: "Тёплый, размер XS", img: img3},
+    {id: 4, title: "Gray sweater", price: 60, description: "Тёплый, размер XS", img: img4}
 ];
 
 const ProductList = () => {
