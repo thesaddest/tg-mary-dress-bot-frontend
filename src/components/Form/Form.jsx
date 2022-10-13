@@ -132,8 +132,8 @@ const Form = ({addedItems}) => {
                                 maxLength={12}
                                 required
                                 className={"input"}
-                                type="number"
-                                placeholder={"Телефон(только цифры)"}
+                                type="text"
+                                placeholder={"Телефон"}
                                 value={inputs.telephone}
                                 onChange={handleOnChange}
                             />
