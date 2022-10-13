@@ -133,7 +133,7 @@ const Form = ({addedItems}) => {
                                 required
                                 className={"input"}
                                 type="number"
-                                placeholder={"Телефон"}
+                                placeholder={"Телефон(только цифры)"}
                                 value={inputs.telephone}
                                 onChange={handleOnChange}
                             />
