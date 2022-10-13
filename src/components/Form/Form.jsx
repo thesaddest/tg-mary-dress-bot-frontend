@@ -66,11 +66,12 @@ const Form = ({addedItems}) => {
 
     const onSendData = useCallback(() => {
         const data = {
-            inputs
+            inputs,
+            totalPrice: getTotalPrice(addedItems)
         }
         tg.sendData(JSON.stringify(data));
 
-    }, [inputs, tg]);
+    }, [inputs, tg, addedItems]);
 
     const handleSubmit = useCallback(
         (e) => {
@@ -85,7 +86,7 @@ const Form = ({addedItems}) => {
                     true,
                     "Спасибо! Ваш заказ был успешно создан, скоро мы свяжемся с вами."
                 )
-            }).then(() => setTimeout(() => {onSendData()}, 2000))
+            }).then(() => setTimeout(() => {onSendData()}, 1000))
         },
         [inputs, handleServerResponse, onSendData]
     );
