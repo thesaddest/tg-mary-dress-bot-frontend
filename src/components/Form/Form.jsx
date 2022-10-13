@@ -94,7 +94,9 @@ const Form = ({addedItems}) => {
             ...prev,
             item: addedItems.map((addedItem) => addedItem.title),
         }));
-    }, [addedItems])
+    }, [addedItems]);
+
+    useEffect(() => console.log(inputs.item),[inputs])
 
     return (
         <div className={"form-wrapper"}>
