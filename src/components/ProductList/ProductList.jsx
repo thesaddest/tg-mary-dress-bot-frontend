@@ -10,8 +10,8 @@ import img4 from "../../assets/4.PNG"
 
 const products = [
     {id: 1, title: "Кардиган", price: 60, description: "Бежевый", img: img1},
-    {id: 2, title: "Кофта-топик", price: 60, description: "Черный, Zara", img: img2},
-    {id: 3, title: "Свитер", price: 60, description: "Тёмно-серый, тёплый, Pull&Bear", img: img3},
+    {id: 2, title: "Кофта-топик ZARA", price: 60, description: "Черный", img: img2},
+    {id: 3, title: "Свитер Pull&Bear", price: 60, description: "Тёмно-серый, тёплый", img: img3},
     {id: 4, title: "Свитер", price: 60, description: "Серый, тёплый", img: img4}
 ]
 
