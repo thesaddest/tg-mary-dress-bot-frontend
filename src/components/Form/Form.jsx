@@ -2,6 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import "./Form.css";
 import axios from "axios";
 import {useTelegram} from "../../hooks/useTelegram";
+import {getTotalPrice} from "../../utils/getTotalPrice";
 
 const Form = ({addedItems}) => {
     const {tg} = useTelegram();
@@ -96,8 +97,6 @@ const Form = ({addedItems}) => {
         }));
     }, [addedItems]);
 
-    useEffect(() => console.log(inputs.item),[inputs])
-
     return (
         <div className={"form-wrapper"}>
             <div className={"form-container"}>
@@ -147,7 +146,9 @@ const Form = ({addedItems}) => {
                                 value={inputs.item}
                                 onChange={handleOnChange}
                             />
-                            <div style={{textAlign: "center", marginTop: "2.5rem"}}>
+
+                            <div style={{textAlign: "center", marginTop: "1rem"}}>
+                                <h3 style={{marginBottom: "1rem"}}>Total price: {getTotalPrice(addedItems)} zl</h3>
                                 <button
                                     type="submit"
                                     className="form-button"
