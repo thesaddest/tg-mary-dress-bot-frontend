@@ -80,7 +80,7 @@ const Form = ({addedItems}) => {
             axios({
                 method: 'POST',
                 url: process.env.REACT_APP_CONTACT_FORM_ENDPOINT,
-                data: inputs + ` ${getTotalPrice(addedItems)}zl`
+                data: inputs
             }).then(_response => {
                 handleServerResponse(
                     true,
@@ -88,7 +88,7 @@ const Form = ({addedItems}) => {
                 )
             }).then(() => setTimeout(() => {onSendData()}, 1000))
         },
-        [inputs, handleServerResponse, onSendData, addedItems]
+        [inputs, handleServerResponse, onSendData]
     );
 
     useEffect(() => {
