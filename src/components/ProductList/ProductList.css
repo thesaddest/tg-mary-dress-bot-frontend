@@ -1,6 +1,12 @@
 .list {
     display: flex;
-    justify-items: center;
+    flex-wrap: wrap;
+    color: white;
+}
+
+.item {
+    text-align: center;
+    justify-content: center;
     align-items: center;
-    flex-direction: column;
+    margin: 1rem;
 }

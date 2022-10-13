@@ -1,15 +1,3 @@
-.product {
-    display: flex;
-    flex-direction: column;
-    border: 2px solid white;
-    color: white;
-    border-radius: 1.5rem;
-    padding: 15px;
-    width: 170px;
-    justify-items: center;
-    align-items: center;
-}
-
 .img-wrapper {
     display: flex;
 }
@@ -26,5 +14,8 @@
 }
 
 .add-btn {
-    width: 100%;
+    background: white;
+    color: black;
+    border-radius: 1.5rem;
+    padding: 0.5rem 2rem;
 }
