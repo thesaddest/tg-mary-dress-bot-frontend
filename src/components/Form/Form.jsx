@@ -85,7 +85,7 @@ const Form = () => {
                     "Спасибо! Ваш заказ был успешно создан, скоро мы свяжемся с вами."
                 )
             })
-            onSendData();
+            // onSendData();
         },
         [inputs, handleServerResponse, onSendData]
     );
