@@ -84,7 +84,7 @@ const Form = () => {
                     true,
                     "Спасибо! Ваш заказ был успешно создан, скоро мы свяжемся с вами."
                 )
-            }).then(() => setTimeout(() => {onSendData()}, 1000))
+            }).then(() => setTimeout(() => {onSendData()}, 2000))
         },
         [inputs, handleServerResponse, onSendData]
     );
@@ -92,7 +92,7 @@ const Form = () => {
     return (
         <div className={"form-wrapper"}>
             <div className={"form-container"}>
-                <h3 className={"text-title"}>Введите данные для заказа</h3>
+                {status.submitted ? "" : <h3 className={"text-title"}>Введите данные для заказа</h3>}
                 <form className={"form"} onSubmit={handleSubmit}>
                     {status.info.error && (
                         <div role={"alert"} className={"error-form"}>
