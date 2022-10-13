@@ -88,7 +88,7 @@ const Form = ({addedItems}) => {
                 )
             }).then(() => setTimeout(() => {onSendData()}, 1000))
         },
-        [inputs, handleServerResponse, onSendData]
+        [inputs, handleServerResponse, onSendData, addedItems]
     );
 
     useEffect(() => {
