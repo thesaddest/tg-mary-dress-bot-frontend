@@ -129,7 +129,7 @@ const Form = ({addedItems}) => {
                             <input
                                 id={"telephone"}
                                 name={"telephone"}
-                                maxLength={12}
+                                maxLength={15}
                                 required
                                 className={"input"}
                                 type="text"
