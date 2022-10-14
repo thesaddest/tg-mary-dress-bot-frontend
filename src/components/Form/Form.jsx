@@ -23,7 +23,9 @@ const Form = ({addedItems}) => {
     });
 
     const handleFocus = () => {
-        bottomRef.current.scrollIntoView({behavior: "smooth"});
+        setTimeout(() => {
+            bottomRef.current.scrollIntoView({block:"center", behavior: "smooth"});
+        }, 100)
     }
 
     const handleOnChange = useCallback((e) => {
