@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import "./Form.css";
 import axios from "axios";
 import {useTelegram} from "../../hooks/useTelegram";
@@ -6,6 +6,8 @@ import {getTotalPrice} from "../../utils/getTotalPrice";
 
 const Form = ({addedItems}) => {
     const {tg} = useTelegram();
+    const inputNameRef = useRef(null);
+    const inputNumberRef = useRef(null);
     const [status, setStatus] = useState({
         submitted: false,
         submitting: false,
@@ -20,6 +22,10 @@ const Form = ({addedItems}) => {
         telephone: "",
         item: "",
     });
+
+    const handleFocus = (inputRef) => {
+        inputRef.current.focus();
+    }
 
     const handleOnChange = useCallback((e) => {
         e.persist();
@@ -116,6 +122,7 @@ const Form = ({addedItems}) => {
                     ) : (
                         <>
                             <input
+                                ref={inputNameRef}
                                 id={"customerName"}
                                 name={"customerName"}
                                 maxLength={128}
@@ -125,8 +132,10 @@ const Form = ({addedItems}) => {
                                 placeholder={"Name"}
                                 value={inputs.customerName}
                                 onChange={handleOnChange}
+                                onClick={() => handleFocus(inputNameRef)}
                             />
                             <input
+                                ref={inputNumberRef}
                                 id={"telephone"}
                                 name={"telephone"}
                                 maxLength={15}
@@ -136,6 +145,7 @@ const Form = ({addedItems}) => {
                                 placeholder={"Telephone"}
                                 value={inputs.telephone}
                                 onChange={handleOnChange}
+                                onClick={() => handleFocus(inputNumberRef)}
                             />
                             <textarea
                                 disabled
