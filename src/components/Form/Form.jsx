@@ -6,7 +6,8 @@ import {getTotalPrice} from "../../utils/getTotalPrice";
 
 const Form = ({addedItems}) => {
     const {tg} = useTelegram();
-    const bottomRef = useRef(null);
+    const inputNameRef = useRef(null);
+    const inputTelephoneRef = useRef(null);
     const [status, setStatus] = useState({
         submitted: false,
         submitting: false,
@@ -22,9 +23,9 @@ const Form = ({addedItems}) => {
         item: "",
     });
 
-    const handleFocus = () => {
+    const handleFocus = (ref) => {
         setTimeout(() => {
-            bottomRef.current.scrollIntoView({block:"center", behavior: "smooth"});
+            ref.current.scrollIntoView({block:"center", behavior: "smooth"});
         }, 100)
     }
 
@@ -130,9 +131,10 @@ const Form = ({addedItems}) => {
                                 className={"input"}
                                 type="text"
                                 placeholder={"Name"}
+                                ref={inputNameRef}
                                 value={inputs.customerName}
                                 onChange={handleOnChange}
-                                onClick={handleFocus}
+                                onClick={() => handleFocus(inputNameRef)}
                             />
                             <input
                                 id={"telephone"}
@@ -142,9 +144,10 @@ const Form = ({addedItems}) => {
                                 className={"input"}
                                 type="text"
                                 placeholder={"Telephone"}
+                                ref={inputTelephoneRef}
                                 value={inputs.telephone}
                                 onChange={handleOnChange}
-                                onClick={handleFocus}
+                                onClick={() => handleFocus(inputTelephoneRef)}
                             />
                             <textarea
                                 disabled
@@ -170,7 +173,6 @@ const Form = ({addedItems}) => {
                                         : "Submitting..."}
                                 </button>
                             </div>
-                            <div style={{visibility: "hidden"}} ref={bottomRef}></div>
                         </>
                     )}
                 </form>
