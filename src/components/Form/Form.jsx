@@ -25,6 +25,7 @@ const Form = ({addedItems}) => {
 
     const handleFocus = (inputRef) => {
         inputRef.current.focus();
+        inputRef.current.scrollIntoView();
     }
 
     const handleOnChange = useCallback((e) => {
