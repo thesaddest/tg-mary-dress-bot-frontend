@@ -6,8 +6,7 @@ import {getTotalPrice} from "../../utils/getTotalPrice";
 
 const Form = ({addedItems}) => {
     const {tg} = useTelegram();
-    const inputNameRef = useRef(null);
-    const inputNumberRef = useRef(null);
+    const bottomRef = useRef(null);
     const [status, setStatus] = useState({
         submitted: false,
         submitting: false,
@@ -23,9 +22,8 @@ const Form = ({addedItems}) => {
         item: "",
     });
 
-    const handleFocus = (inputRef) => {
-        inputRef.current.focus();
-        inputRef.current.scrollIntoView();
+    const handleFocus = () => {
+        bottomRef.current.scrollIntoView({behavior: "smooth"});
     }
 
     const handleOnChange = useCallback((e) => {
@@ -123,7 +121,6 @@ const Form = ({addedItems}) => {
                     ) : (
                         <>
                             <input
-                                ref={inputNameRef}
                                 id={"customerName"}
                                 name={"customerName"}
                                 maxLength={128}
@@ -133,10 +130,9 @@ const Form = ({addedItems}) => {
                                 placeholder={"Name"}
                                 value={inputs.customerName}
                                 onChange={handleOnChange}
-                                onClick={() => handleFocus(inputNameRef)}
+                                onClick={handleFocus}
                             />
                             <input
-                                ref={inputNumberRef}
                                 id={"telephone"}
                                 name={"telephone"}
                                 maxLength={15}
@@ -146,7 +142,7 @@ const Form = ({addedItems}) => {
                                 placeholder={"Telephone"}
                                 value={inputs.telephone}
                                 onChange={handleOnChange}
-                                onClick={() => handleFocus(inputNumberRef)}
+                                onClick={handleFocus}
                             />
                             <textarea
                                 disabled
@@ -172,6 +168,7 @@ const Form = ({addedItems}) => {
                                         : "Submitting..."}
                                 </button>
                             </div>
+                            <div style={{visibility: "hidden"}} ref={bottomRef}></div>
                         </>
                     )}
                 </form>
